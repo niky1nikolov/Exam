@@ -1,0 +1,94 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace PokemonEvolution
+{
+    class Program
+    {
+        class Evolution
+        {
+            public Evolution(string type, int index)
+            {
+                Type = type;
+                Index = index;
+            }
+
+            public string Type { get; set; }
+            public int Index { get; set; }
+        }
+
+        static void Main(string[] args)
+        {
+
+
+            Dictionary<string, List<Evolution>> colectionPokemon = new Dictionary<string, List<Evolution>>();
+            string name = "";
+
+            while (true)
+            {
+                string input = Console.ReadLine();
+
+                if (input == "wubbalubbadubdub")
+                {
+                    break;
+                }
+
+                
+
+                string[] buff = input.Split(new char[] { ' ', '-', '>' }, StringSplitOptions.RemoveEmptyEntries)
+                                      .ToArray();
+                if (buff.Length > 1)
+                {
+
+
+                    name = buff[0];
+                    Evolution evolution = new Evolution(buff[1], int.Parse(buff[2]));
+                    
+                    if (!colectionPokemon.ContainsKey(name))
+                    {
+                        List<Evolution> current = new List<Evolution>() { evolution };
+                        colectionPokemon.Add(name, current);
+                    }
+                    else
+                    {
+                        colectionPokemon[name].Add(evolution);
+                    }
+
+                    if (colectionPokemon.ContainsKey(input))
+                    {
+                        foreach (var evolufion in colectionPokemon[input])
+                        {
+                            Console.WriteLine($"{evolufion.Type} <-> {evolufion.Index}");
+                            continue;
+                        }
+
+                    }
+                }
+                else
+                {
+                    if (colectionPokemon.ContainsKey(buff[0]))
+                    {
+                        Console.WriteLine($"# {buff[0]}");
+                        foreach (var evolufion in colectionPokemon[buff[0]])
+                        {
+                            Console.WriteLine($"{evolufion.Type} <-> {evolufion.Index}");
+                        }
+
+                    }
+                }
+            }    
+
+            foreach (var kvp in colectionPokemon)
+            {
+                Console.WriteLine($"# {kvp.Key}");
+
+                foreach (var evolu in kvp.Value.OrderByDescending(p => p.Index))
+                {
+                    Console.WriteLine($"{evolu.Type} <-> {evolu.Index}");
+                }
+
+            }
+        }
+    }
+}
