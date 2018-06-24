@@ -1,0 +1,67 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+
+namespace PokemonDonNotGo
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] number = Console.ReadLine().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
+
+            List<int> pokemons = new List<int>(number.Length);
+            long pokemonSum = 0;
+
+            foreach (var item in number)
+            {
+                pokemons.Add(item);
+            }
+
+            while (pokemons.Count != 0)
+            {
+
+                int indexRemuve = int.Parse(Console.ReadLine());
+
+                if (indexRemuve < 0)
+                {
+                    break;
+                }
+
+                if (indexRemuve >= pokemons.Count)
+                {
+                    int lastNum = pokemons[pokemons.Count - 1];
+                    pokemons.RemoveAt(pokemons.Count - 1);
+                    pokemons.Add(pokemons[0]);
+                    pokemonSum += lastNum;
+
+                    for (int i = 0; i < pokemons.Count; i++)
+                    {
+                        pokemons[i] += lastNum;
+                    }
+
+                    continue;
+                }
+
+                int remuveNum = pokemons[indexRemuve];
+                pokemonSum += remuveNum;
+                pokemons.RemoveAt(indexRemuve);
+
+                for (int i = 0; i < pokemons.Count; i++)
+                {
+                    if (pokemons[i] <= remuveNum )
+                    {
+                        pokemons[i] += remuveNum;
+                    }
+                    else
+                    {
+                        pokemons[i] -= remuveNum;
+                    }
+                }
+
+            }
+
+            Console.WriteLine(pokemonSum);
+        }
+    }
+}
