@@ -9,8 +9,8 @@ namespace Sino_The_Walker
         static void Main(string[] args)
         {
             DateTime time = DateTime.ParseExact(Console.ReadLine(), "HH:mm:ss", CultureInfo.InvariantCulture);
-            ulong  coutStep = ulong.Parse(Console.ReadLine());
-            ulong stetTimeSec = ulong.Parse(Console.ReadLine());
+            ulong  coutStep = ulong.Parse(Console.ReadLine()) % 86400;
+            ulong stetTimeSec = ulong.Parse(Console.ReadLine()) % 86400;
 
              //BigInteger secTime = new BigInteger();
 
